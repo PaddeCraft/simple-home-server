@@ -1,0 +1,6 @@
+  80: Homer         #
+1001: Yacht         #
+1002: PiHole        #
+1003: Nextcloud     #
+8123: Homeassistant #
+9090: Dashboard     #
