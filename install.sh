@@ -84,7 +84,11 @@ sudo docker volume create pihole_app
 sudo docker volume create dns_config
 sudo docker pull pihole/pihole
 sudo systemctl stop systemd-resolved
-sleep 10
+sudo systemctl disable systemd-resolved
+sudo sed -i 's/^dns=dnsmasq/#&/' /etc/NetworkManager/NetworkManager.conf
+sudo service network-manager restart
+sudo service networking restart
+sudo killall dnsmasq
 sudo docker run --restart=always -d \
     --name=pihole \
     -e TZ=$timezone \
@@ -94,7 +98,6 @@ sudo docker run --restart=always -d \
     -p 1002:80 -p 53:53/tcp -p 53:53/udp \
     pihole/pihole
 sudo docker exec -it pihole /bin/bash pihole -a -p admin
-sudo systemctl start systemd-resolved
 
 # Tell user to change default credentials:
 echo "Successfully installed all components."
