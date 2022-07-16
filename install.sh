@@ -94,6 +94,8 @@ cp -r ./assets/* /assets/
 
 # clear
 
+waitForEnter
+
 # declare ipAddress=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 # Ask for the IP address of the server
 echo "Enter IP address of the server:"
