@@ -84,6 +84,7 @@ sudo docker volume create pihole_app
 sudo docker volume create dns_config
 sudo docker pull pihole/pihole
 sudo systemctl stop systemd-resolved
+sleep 10
 sudo docker run --restart=always -d \
     --name=pihole \
     -e TZ=$timezone \
