@@ -6,12 +6,22 @@ read timezone
 
 declare gitUrl="https://github.com/PaddeCraft/simple-home-server.git"
 
+# Function that waits for user pressing enter
+function waitForEnter() {
+    echo "Press ENTER to continue..."
+    read
+}
+
 # Packages:
 sudo apt-get update
 sudo apt-get install -y curl net-tools avahi-daemon avahi-utils git
 
+waitForEnter
+
 # Docker:
 sudo curl -fsSL https://get.docker.com | sh
+
+waitForEnter
 
 # Install Yacht:
 sudo docker volume create yacht
@@ -21,6 +31,8 @@ sudo docker run --restart=always -d \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -v yacht:/config selfhostedpro/yacht
 
+waitForEnter
+
 # Install homeassistant:
 sudo docker run --restart=always -d \
     --name homeassistant \
@@ -29,6 +41,8 @@ sudo docker run --restart=always -d \
     -v /VOLUME:/config \
     --network=host \
     ghcr.io/home-assistant/home-assistant:stable
+
+waitForEnter
 
 # Install PiHole:
 sudo docker volume create pihole_app
@@ -45,11 +59,15 @@ sudo docker run --restart=always -d \
     pihole/pihole
 sudo docker exec -it pihole /bin/bash pihole -a -p admin
 
+waitForEnter
+
 # Install Nextcloud:
 sudo docker run -d --restart=always \
     --name nextcloud \
     -p 1003:80 \
     nextcloud
+
+waitForEnter
 
 # Install User Dashboard
 sudo docker run -d --restart=always \
@@ -58,9 +76,12 @@ sudo docker run -d --restart=always \
     -v /assets:/www/assets \
     b4bz/homer:latest
 
+waitForEnter
+
 # Install Admin Dashboard:
 sudo apt-get install -y cockpit cockpit-machines
 
+waitForEnter
 
 # Configure Homer:
 sudo mkdir /assets/ || true
@@ -69,7 +90,9 @@ sudo mkdir /assets/ || true
 cd ~/
 git clone $gitUrl
 cd simple-home-server
-cp -r assets /assets/
+cp -r ./assets/* /assets/
+
+# clear
 
 # declare ipAddress=$(ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
 # Ask for the IP address of the server

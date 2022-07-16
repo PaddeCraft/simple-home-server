@@ -14,4 +14,4 @@ Is beeing tested on Ubuntu Server 20.04.
 
 ## Usage
 
-`bash <(curl -s https://raw.githubusercontent.com/PaddeCraft/simple-home-server/master/install.sh)`
+`wget -O - https://raw.githubusercontent.com/PaddeCraft/simple-home-server/master/install.sh | bash`
